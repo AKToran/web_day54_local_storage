@@ -14,8 +14,20 @@ const addToLocalStorage = () =>{
 
   localStorage.setItem("abid", person);
   // it become an object Object like:
-  console.log(person.toString());
+  // console.log(person.toString());
 
   const convertedPerson = JSON.stringify(person);
   localStorage.setItem("abid", convertedPerson);
+}
+
+
+const getFromLocalStorage = () => {
+  const personString = localStorage.getItem("abid");
+  const person = JSON.parse(personString);
+  console.log(person.name);
+
+  localStorage.removeItem("abid");
+  // localStorage.clear();
+
+
 }
