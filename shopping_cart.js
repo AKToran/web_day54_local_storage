@@ -5,22 +5,24 @@ const handleAddToCart = () =>{
   const name = productName.value;
   const quantity = productQuantity.value;
   
-  displayProductCart(name, quantity);
-
+  setLocalStorage(name, quantity);
+  displayProductCart(); //show updated cart
   // clear the input fields in ui
   productName.value ="";
   productQuantity.value = "";
 }
 
-const displayProductCart = (productName, productQuantity) =>{
-  const container = document.getElementById('product-container');
-  const li = document.createElement('li');
-  
-  li.innerText = `${productName} : ${productQuantity}`;
-  
-  if (productName && productQuantity) {
-    container.appendChild(li);
-    setLocalStorage(productName, productQuantity);
+const displayProductCart = () =>{
+  const cartJSON = localStorage.getItem('cart');
+  const cart = JSON.parse(cartJSON);
+
+  const ul = document.getElementById('product-container');
+  ul.innerHTML = "";
+  // console.log(cart);
+  for(let product in cart){
+    const li = document.createElement('li');
+    li.innerText = `${product} : ${cart[product]}`;
+    ul.appendChild(li);
   }
 }
 
@@ -39,6 +41,8 @@ const setLocalStorage = (productName, productQuantity) =>{
   const cart = getLocalStorage();
   
   cart[productName] = productQuantity;
-  console.log(JSON.stringify(cart));
+  // console.log(JSON.stringify(cart));
   localStorage.setItem("cart",JSON.stringify(cart));
 }
+
+displayProductCart(); //auto display the cart 
